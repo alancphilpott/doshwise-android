@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Lecture9</string>
+    <string name="new_game">New Game</string>
+    <string name="load_game">Load Game</string>
+    <string name="high_scores">High Scores</string>
+    <string name="how_to_play">How To Play</string>
+</resources>
