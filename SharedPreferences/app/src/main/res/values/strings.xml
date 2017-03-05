@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Shared Preferences</string>
+    <string name="buttonText">Save User</string>
+    <string name="welcome_string">Welcome, %s</string>
+    <string name="hintText">User Name</string>
+    <string name="btnContinue">Continue</string>
+
+    <string name="message_user_saved">User \'%s\' Saved!</string>
+    <string name="guest">Guest</string>
+    <string name="pref_user_name">PREF_USER_NAME</string>
+</resources>
