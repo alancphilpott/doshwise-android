@@ -115,6 +115,20 @@ public class DBHelper extends SQLiteOpenHelper {
             return true;
     }
 
+    // Peoplexpenses Data
+    public boolean insertPEData(Integer pid, Integer hid) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COL_E1,pid);
+        values.put(COL_E2,hid);
+
+        long result = db.insert(TABLE_PEOPLEXPENSES, null, values);
+        if(result == -1)
+            return false;
+        else
+            return true;
+    }
+
     /*
     Methods To Retrieve Data
      */
@@ -143,5 +157,11 @@ public class DBHelper extends SQLiteOpenHelper {
     public Cursor maxHouseholdID () {
         SQLiteDatabase db = this.getReadableDatabase();
         return db.rawQuery("SELECT MAX(hid) AS hid FROM households", null);
+    }
+
+    // Max Expense ID
+    public Cursor maxExpenseID () {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery("SELECT MAX(eid) AS eid FROM expenses", null);
     }
 }

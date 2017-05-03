@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".create_household">
+        <activity android:name=".view_expenses">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -17,7 +17,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".create_expense" />
-        <activity android:name=".view_expenses" />
+        <activity android:name=".create_household" />
         <activity android:name=".split_expenses" />
         <activity android:name=".view_history" />
     </application>

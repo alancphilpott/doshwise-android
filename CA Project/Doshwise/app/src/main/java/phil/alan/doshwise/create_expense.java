@@ -1,6 +1,7 @@
 package phil.alan.doshwise;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.icu.util.Calendar;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
@@ -39,10 +40,7 @@ public class create_expense extends AppCompatActivity {
                 // get current month
                 Calendar c = Calendar.getInstance();
                 int month = c.get(Calendar.MONTH);
-                String monthString = "UN";
-
-                if (month == 4)
-                    monthString = "MAY";
+                String monthString = getMonth(month);
 
                 // validation everything is entered
                 if (expense_name.getText().toString().equals("") || expense_amount.getText().toString().equals("")) {
@@ -54,6 +52,7 @@ public class create_expense extends AppCompatActivity {
                     return;
                 }
 
+                // People Involved in the Expense
                 ArrayList<Integer> peopleInvolved = new ArrayList<Integer>();
                 if (ch1.isChecked())
                     peopleInvolved.add(1);
@@ -66,19 +65,93 @@ public class create_expense extends AppCompatActivity {
                 insert information into database
                 - expense information one by one for each person
                  */
+                boolean expenseInserted = db.insertExpensesData
+                        (expense_name.getText().toString(),
+                                expense_amount.getText().toString(),
+                                monthString);
+
+                boolean peInserted = false;
+                Integer eid = maxExpenseID();
+
                 for (Integer i : peopleInvolved) {
-                    boolean expenseInserted = db.insertExpensesData
-                            (expense_name.getText().toString(),
-                            expense_amount.getText().toString(),
-                            monthString);
+                    peInserted = db.insertPEData(i, eid);
+
+                    if (!peInserted)
+                        return;
+                    else
+                        peInserted = true;
                 }
 
-                // display confirmation toast
+                if (expenseInserted && peInserted)
+                    Toast.makeText(create_expense.this, "Household Created", Toast.LENGTH_LONG).show();
+                else
+                    Toast.makeText(create_expense.this, "Error Occurred", Toast.LENGTH_LONG).show();
 
                 // move to next activity
                 Intent intent = new Intent(create_expense.this, view_expenses.class);
                 startActivity(intent);
             }
         });
+    }
+
+    // Max Expense ID
+    public int maxExpenseID () {
+        int maxID = 0;
+
+        Cursor cursor = db.maxExpenseID();
+        if (cursor.moveToFirst())
+        {
+            do
+            {
+                maxID = cursor.getInt(0);
+            } while(cursor.moveToNext());
+        }
+        return maxID;
+    }
+
+    // Convert Integer To Month
+    public String getMonth (int month) {
+        String monthString = "";
+
+        switch (month) {
+            case 0:
+                monthString = "JAN";
+                break;
+            case 1:
+                monthString = "FEB";
+                break;
+            case 2:
+                monthString = "MAR";
+                break;
+            case 3:
+                monthString = "APR";
+                break;
+            case 4:
+                monthString = "MAY";
+                break;
+            case 5:
+                monthString = "JUN";
+                break;
+            case 6:
+                monthString = "JUL";
+                break;
+            case 7:
+                monthString = "AUG";
+                break;
+            case 8:
+                monthString = "SEP";
+                break;
+            case 9:
+                monthString = "OCT";
+                break;
+            case 10:
+                monthString = "NOV";
+                break;
+            case 11:
+                monthString = "DEC";
+                break;
+        }
+
+        return monthString;
     }
 }
