@@ -16,7 +16,7 @@ import java.util.Date;
 // drop peoplexpenses, drop expenses, drop people, drop households
 
 public class DBHelper extends SQLiteOpenHelper {
-    public static final String DATABASE_NAME = "doshwise.db";
+    public static final String DATABASE_NAME = "Doshwise.db";
 
     public static final String TABLE_HOUSEHOLDS = "households_table";
     public static final String COL_H1 = "hid";
@@ -53,7 +53,7 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE " + TABLE_HOUSEHOLDS + " (hid INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, numPeople INTEGER NOT NULL)");
-        db.execSQL("CREATE TABLE " + TABLE_PEOPLE + " (pid INTEGER PRIMARY KEY AUTOINCREMENT, hid INTEGER, name TEXT NOT NULL, FOREIGN KEY (hid) REFERENCES HOUSEHOLDS (hid))");
+        db.execSQL("CREATE TABLE " + TABLE_PEOPLE + " (pid INTEGER PRIMARY KEY AUTOINCREMENT, hid INTEGER AUTOINCREMENT, name TEXT NOT NULL, FOREIGN KEY (hid) REFERENCES HOUSEHOLDS (hid))");
         db.execSQL("CREATE TABLE " + TABLE_EXPENSES + " (eid INTEGER PRIMARY KEY AUTOINCREMENT, pid INTEGER, hid INTEGER, name TEXT NOT NULL, amount DECIMAL(9,2) NOT NULL, month TEXT NOT NULL, FOREIGN KEY (pid) REFERENCES PEOPLE (pid), FOREIGN KEY (hid) REFERENCES HOUSEHOLDS (hid))");
         db.execSQL("CREATE TABLE " + TABLE_PEOPLEXPENSES + " (pid INTEGER, eid INTEGER, PRIMARY KEY (pid, eid), FOREIGN KEY (pid) REFERENCES PEOPLE (pid), FOREIGN KEY (eid) REFERENCES EXPENSES (eid))");
     }
@@ -88,9 +88,10 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     // People Data
-    public boolean insertPeopleData(String name) {
+    public boolean insertPeopleData(Integer hid, String name) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
+        values.put(COL_P2, hid);
         values.put(COL_P3,name);
 
         long result = db.insert(TABLE_PEOPLE, null, values);
@@ -101,9 +102,11 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     // Expenses Data
-    public boolean insertExpensesData(String name, Double amount, String month) {
+    public boolean insertExpensesData(Integer pid, Integer hid, String name, Double amount, String month) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
+        values.put(COL_E2, pid);
+        values.put(COL_E3, hid);
         values.put(COL_E4,name);
         values.put(COL_E5,amount);
         values.put(COL_E6,month);
@@ -165,4 +168,13 @@ public class DBHelper extends SQLiteOpenHelper {
 
     // People Data
     // Expenses Data
+
+    /*
+    Methods to retrieve max ID
+     */
+    // Max Household ID
+    public Cursor maxHouseholdID () {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.rawQuery("SELECT MAX(HID) AS HID FROM HOUSEHOLDS_TABLE", null);
+    }
 }

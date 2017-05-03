@@ -1,6 +1,8 @@
 package phil.alan.doshwise;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -19,16 +21,18 @@ public class create_household extends AppCompatActivity {
         setContentView(R.layout.activity_create_household);
         db = new DBHelper(this);
 
+
         // adding listener to complete button
         Button householdToViewExpenses = (Button) findViewById(R.id.complete_button);
         householdToViewExpenses.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 // assign local object variables
+                EditText house_name = (EditText) findViewById(R.id.household_name);
                 EditText p_one = (EditText) findViewById(R.id.p_one);
                 EditText p_two = (EditText) findViewById(R.id.p_two);
                 EditText p_three = (EditText) findViewById(R.id.p_three);
-                EditText house_name = (EditText) findViewById(R.id.household_name);
                 String numPeople = "3";
 
                 ArrayList<String> people = new ArrayList<String>();
@@ -36,8 +40,9 @@ public class create_household extends AppCompatActivity {
                 people.add(p_two.getText().toString());
                 people.add(p_three.getText().toString());
                 
-                // validation name is not blank
-                if (house_name.getText().toString().equals("")) {
+                // validation names are not blank
+                if (house_name.getText().toString().equals("") || p_one.getText().toString().equals("") ||
+                        p_two.getText().toString().equals("") || p_three.getText().toString().equals("")) {
                     Toast.makeText(create_household.this, "Please Enter All Fields", Toast.LENGTH_LONG).show();
                     return;
                 }
@@ -48,10 +53,11 @@ public class create_household extends AppCompatActivity {
                 - people information one by one
                  */
                 boolean houseInserted = db.insertHouseholdData(house_name.getText().toString(), numPeople);
-                boolean personInserted = false;
 
+                boolean personInserted = false;
+                int hid = maxHouseholdID(); // for assigning people to houses
                 for (String s : people) {
-                    personInserted = db.insertPeopleData(s);
+                    personInserted = db.insertPeopleData(hid, s);
 
                     if (!personInserted)
                         return;
@@ -69,5 +75,20 @@ public class create_household extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    // Max Household ID
+    public int maxHouseholdID () {
+        int maxID = 0;
+
+        Cursor cursor = db.maxHouseholdID();
+        if (cursor.moveToFirst())
+        {
+            do
+            {
+                maxID = cursor.getInt(0);
+            } while(cursor.moveToNext());
+        }
+        return maxID;
     }
 }

@@ -11,27 +11,31 @@
         android:layout_width="110dp"
         android:layout_height="45dp"
         android:text="expenses"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="16dp" />
+        tools:layout_editor_absoluteY="16dp"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent" />
 
     <Button
         android:id="@+id/btn_split"
         android:layout_width="110dp"
         android:layout_height="wrap_content"
         android:text="split"
-        tools:layout_editor_absoluteX="137dp"
         tools:layout_editor_absoluteY="16dp"
 
         android:textColor="@android:color/holo_orange_dark"
         android:background="@android:color/transparent"
-        />
+        app:layout_constraintLeft_toRightOf="@+id/btn_expenses"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintRight_toLeftOf="@+id/btn_history"
+        android:layout_marginRight="8dp" />
 
     <Button
         android:id="@+id/btn_history"
         android:layout_width="110dp"
         android:layout_height="wrap_content"
         android:text="history"
-        tools:layout_editor_absoluteX="258dp"
-        tools:layout_editor_absoluteY="16dp" />
+        tools:layout_editor_absoluteY="16dp"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
