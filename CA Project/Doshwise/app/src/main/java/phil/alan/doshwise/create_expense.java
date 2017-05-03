@@ -32,7 +32,6 @@ public class create_expense extends AppCompatActivity {
                 // assign local object variables
                 EditText expense_name = (EditText) findViewById(R.id.expense_name);
                 EditText expense_amount = (EditText) findViewById(R.id.expense_amount);
-                String amountString = expense_amount.getText().toString();
                 CheckBox ch1 = (CheckBox) findViewById(R.id.ch1);
                 CheckBox ch2 = (CheckBox) findViewById(R.id.ch2);
                 CheckBox ch3 = (CheckBox) findViewById(R.id.ch3);
@@ -69,10 +68,8 @@ public class create_expense extends AppCompatActivity {
                  */
                 for (Integer i : peopleInvolved) {
                     boolean expenseInserted = db.insertExpensesData
-                            (i,
-                            1,
-                            expense_name.getText().toString(),
-                            Double.parseDouble(amountString),
+                            (expense_name.getText().toString(),
+                            expense_amount.getText().toString(),
                             monthString);
                 }
 

@@ -28,19 +28,20 @@ public class create_household extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+
                 // assign local object variables
                 EditText house_name = (EditText) findViewById(R.id.household_name);
                 EditText p_one = (EditText) findViewById(R.id.p_one);
                 EditText p_two = (EditText) findViewById(R.id.p_two);
                 EditText p_three = (EditText) findViewById(R.id.p_three);
-                String numPeople = "3";
 
+                // ArrayList to hold peoples names
                 ArrayList<String> people = new ArrayList<String>();
                 people.add(p_one.getText().toString());
                 people.add(p_two.getText().toString());
                 people.add(p_three.getText().toString());
                 
-                // validation names are not blank
+                // validation fields are not blank
                 if (house_name.getText().toString().equals("") || p_one.getText().toString().equals("") ||
                         p_two.getText().toString().equals("") || p_three.getText().toString().equals("")) {
                     Toast.makeText(create_household.this, "Please Enter All Fields", Toast.LENGTH_LONG).show();
@@ -51,11 +52,13 @@ public class create_household extends AppCompatActivity {
                 insert information into database
                 - household information
                 - people information one by one
-                 */
-                boolean houseInserted = db.insertHouseholdData(house_name.getText().toString(), numPeople);
+                */
+
+                boolean houseInserted = db.insertHouseholdData(house_name.getText().toString(), "3");
 
                 boolean personInserted = false;
-                int hid = maxHouseholdID(); // for assigning people to houses
+                Integer hid = maxHouseholdID(); // for assigning people to houses
+
                 for (String s : people) {
                     personInserted = db.insertPeopleData(hid, s);
 

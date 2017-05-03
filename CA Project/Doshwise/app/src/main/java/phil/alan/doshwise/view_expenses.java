@@ -12,13 +12,11 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 public class view_expenses extends AppCompatActivity {
-    DBHelper db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_expenses);
-        db = new DBHelper(this);
 
         // listeners for changing activities
         Button split = (Button) findViewById(R.id.btn_split);
@@ -46,11 +44,11 @@ public class view_expenses extends AppCompatActivity {
             }
         });
 
-        // example display of list
+        /* example display of list
         String[] words = {"Hello", "World"};
         ListView listView = (ListView) findViewById(R.id.expensesList);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, words);
-        listView.setAdapter(adapter);
+        listView.setAdapter(adapter); */
 
         // access database for expense entries
 
