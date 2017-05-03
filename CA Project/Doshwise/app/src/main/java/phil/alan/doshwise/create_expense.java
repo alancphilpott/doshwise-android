@@ -24,6 +24,15 @@ public class create_expense extends AppCompatActivity {
         setContentView(R.layout.activity_create_expense);
         db = new DBHelper(this);
 
+        final CheckBox ch1 = (CheckBox) findViewById(R.id.ch1);
+        final CheckBox ch2 = (CheckBox) findViewById(R.id.ch2);
+        final CheckBox ch3 = (CheckBox) findViewById(R.id.ch3);
+
+        ArrayList<String> names = getNames();
+        ch1.setText(names.get(0));
+        ch2.setText(names.get(1));
+        ch3.setText(names.get(2));
+
         // adding listener to complete button
         Button householdToViewExpenses = (Button) findViewById(R.id.complete_button);
         householdToViewExpenses.setOnClickListener(new View.OnClickListener() {
@@ -33,9 +42,6 @@ public class create_expense extends AppCompatActivity {
                 // assign local object variables
                 EditText expense_name = (EditText) findViewById(R.id.expense_name);
                 EditText expense_amount = (EditText) findViewById(R.id.expense_amount);
-                CheckBox ch1 = (CheckBox) findViewById(R.id.ch1);
-                CheckBox ch2 = (CheckBox) findViewById(R.id.ch2);
-                CheckBox ch3 = (CheckBox) findViewById(R.id.ch3);
 
                 // get current month
                 Calendar c = Calendar.getInstance();
@@ -92,6 +98,18 @@ public class create_expense extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    public ArrayList<String> getNames () {
+        ArrayList<String> names = new ArrayList<>();
+        Cursor cursor = db.getPeopleNames();
+
+        if (cursor.moveToFirst()) {
+            do {
+                names.add(cursor.getString(0));
+            } while (cursor.moveToNext());
+        }
+        return names;
     }
 
     // Max Expense ID

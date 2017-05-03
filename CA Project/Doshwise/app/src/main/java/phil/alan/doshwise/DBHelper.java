@@ -143,6 +143,11 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         return db.rawQuery("SELECT * FROM " + TABLE_PEOPLE, null);
     }
+    // People Names
+    public Cursor getPeopleNames() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.rawQuery("SELECT name FROM " + TABLE_PEOPLE, null);
+    }
 
     // Expenses Data
     public Cursor getAllExpensesData() {
