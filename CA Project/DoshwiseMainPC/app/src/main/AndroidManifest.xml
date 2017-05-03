@@ -16,10 +16,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".create_expense" />
-        <activity android:name=".view_expenses" />
-        <activity android:name=".split_expenses" />
-        <activity android:name=".view_history" />
     </application>
 
 </manifest>
