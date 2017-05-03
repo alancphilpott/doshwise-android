@@ -43,7 +43,7 @@ public class create_expense extends AppCompatActivity {
                 String monthString = getMonth(month);
 
                 // validation everything is entered
-                if (expense_name.getText().toString().equals("") || expense_amount.getText().toString().equals("")) {
+                 if (expense_name.getText().toString().equals("") || expense_amount.getText().toString().equals("")) {
                     Toast.makeText(create_expense.this, "Please Enter All Fields", Toast.LENGTH_LONG).show();
                     return;
                 }
@@ -63,7 +63,7 @@ public class create_expense extends AppCompatActivity {
 
                 /*
                 insert information into database
-                - expense information one by one for each person
+                - expense information one by one for each person - below it inserts expense first, unless expense not inserting either
                  */
                 boolean expenseInserted = db.insertExpensesData
                         (expense_name.getText().toString(),
@@ -71,19 +71,19 @@ public class create_expense extends AppCompatActivity {
                                 monthString);
 
                 boolean peInserted = false;
-                Integer eid = maxExpenseID();
+                Integer eid = maxExpenseID(); // meaning this should be one, thats how i know the people related to what expense num
 
                 for (Integer i : peopleInvolved) {
                     peInserted = db.insertPEData(i, eid);
 
                     if (!peInserted)
-                        return;
+                        return; // drops out here, reason? always false? both always false, dafuq
                     else
                         peInserted = true;
                 }
 
                 if (expenseInserted && peInserted)
-                    Toast.makeText(create_expense.this, "Household Created", Toast.LENGTH_LONG).show();
+                    Toast.makeText(create_expense.this, "Expense Created", Toast.LENGTH_LONG).show();
                 else
                     Toast.makeText(create_expense.this, "Error Occurred", Toast.LENGTH_LONG).show();
 

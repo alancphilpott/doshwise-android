@@ -32,7 +32,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String COL_E1 = "eid";
     public static final String COL_E2 = "name";
     public static final String COL_E3 = "amount";
-    public static final String COL_E4 = "date";
+    public static final String COL_E4 = "month"; //cant wait to finish college ,
 
     public static final String TABLE_PEOPLEXPENSES = "peoplexpenses";
     public static final String COL_PE1 = "pid";
@@ -46,7 +46,7 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     /*
-    Method To Create Tables
+    Method To Create Tables - db problem so, the tables?
      */
     @Override
     public void onCreate(SQLiteDatabase db) {
@@ -108,19 +108,19 @@ public class DBHelper extends SQLiteOpenHelper {
         values.put(COL_E3,amount);
         values.put(COL_E4,month);
 
-        long result = db.insert(TABLE_PEOPLE, null, values);
+        long result = db.insert(TABLE_EXPENSES, null, values); // app froze
         if(result == -1)
             return false;
         else
             return true;
     }
 
-    // Peoplexpenses Data
-    public boolean insertPEData(Integer pid, Integer hid) {
+    // Peoplexpenses Data enter data
+    public boolean insertPEData(Integer pid, Integer eid) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(COL_E1,pid);
-        values.put(COL_E2,hid);
+        values.put(COL_PE1,pid);
+        values.put(COL_PE2,eid);
 
         long result = db.insert(TABLE_PEOPLEXPENSES, null, values);
         if(result == -1)
