@@ -31,8 +31,13 @@ public class split_expenses extends AppCompatActivity {
             }
         });
 
-        // access database to retrieve all current month expenses
+        /*
+       access database to retrieve expenses and split them
+         */
 
-        // add up total expenses grouping by each person in household
+        // create a list of peoples ids and use them to get name
+        // create a list of expense ids and use them to get expense
+        // need to display the person's name and the total of the expenses for that person
+        // make it dynamic
     }
 }

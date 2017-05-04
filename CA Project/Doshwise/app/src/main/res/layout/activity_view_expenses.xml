@@ -52,13 +52,15 @@
 
     <ListView
         android:id="@+id/expensesList"
-        android:layout_width="384dp"
-        android:layout_height="430dp"
+        android:layout_width="383dp"
+        android:layout_height="439dp"
         android:layout_marginBottom="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp" />
+        android:layout_marginRight="8dp"
+        tools:layout_editor_absoluteY="72dp"
+        tools:layout_editor_absoluteX="2dp" />
 
 </android.support.constraint.ConstraintLayout>
