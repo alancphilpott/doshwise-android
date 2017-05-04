@@ -154,6 +154,10 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         return db.rawQuery("SELECT * FROM " + TABLE_EXPENSES, null);
     }
+    public Cursor getExpenseNames() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.rawQuery("SELECT name FROM " + TABLE_EXPENSES, null);
+    }
 
     /*
     Methods to retrieve max ID

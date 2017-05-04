@@ -11,12 +11,31 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 public class view_expenses extends AppCompatActivity {
+    DBHelper db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_expenses);
+        db = new DBHelper(this);
+
+        // access database for expense entries
+        ArrayList<String> expenseNames = new ArrayList<>();
+        Cursor cursor = db.getAllExpensesData();
+
+        if (cursor.moveToFirst()) {
+            do {
+                expenseNames.add("Name: " + cursor.getString(1) + " || Amount: €" + cursor.getString(2));
+            } while (cursor.moveToNext());
+        }
+
+        // add expenses to ListView
+        ListView listView = (ListView) findViewById(R.id.expensesList);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, expenseNames);
+        listView.setAdapter(adapter);
 
         // listeners for changing activities
         Button split = (Button) findViewById(R.id.btn_split);
@@ -43,15 +62,5 @@ public class view_expenses extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-        /* example display of list
-        String[] words = {"Hello", "World"};
-        ListView listView = (ListView) findViewById(R.id.expensesList);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, words);
-        listView.setAdapter(adapter); */
-
-        // access database for expense entries
-
-        // add expenses to ListView
     }
 }
