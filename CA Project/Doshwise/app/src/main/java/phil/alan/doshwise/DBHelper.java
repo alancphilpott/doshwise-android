@@ -152,7 +152,7 @@ public class DBHelper extends SQLiteOpenHelper {
     // Expenses Data
     public Cursor getAllExpensesData() {
         SQLiteDatabase db = this.getWritableDatabase();
-        return db.rawQuery("SELECT * FROM " + TABLE_EXPENSES, null);
+        return db.rawQuery("SELECT eid, name, amount FROM EXPENSES", null);
     }
     public Cursor getExpenseHistory() {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -161,6 +161,37 @@ public class DBHelper extends SQLiteOpenHelper {
     public Cursor splitExpenses() {
         SQLiteDatabase db = this.getWritableDatabase();
         return db.rawQuery("SELECT P.name, sum(E.amount) FROM " + TABLE_EXPENSES + " E, " + TABLE_PEOPLE + " P, " + TABLE_PEOPLEXPENSES + " PE WHERE PE.pid = P.pid AND PE.eid = E.eid GROUP BY P.name", null);
+    }
+    public Cursor numTimes() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.rawQuery("SELECT eid, COUNT(eid) FROM " + TABLE_PEOPLEXPENSES + " GROUP BY eid" ,null);
+    }
+
+    /*
+    Methods To Update Data
+     */
+    // Household Data
+    public boolean updateHouseHoldData(String id, String name, Integer numPeople) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COL_H1, id);
+        values.put(COL_H2, name);
+        values.put(COL_H3, numPeople);
+
+        db.update(TABLE_HOUSEHOLDS, values, "ID = ?", new String[] { id });
+        return true;
+    }
+
+    /*
+    Methods To Delete Data
+     */
+    public Integer deleteExpenseData (String id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete(TABLE_EXPENSES, "eid = ?", new String[] { id });
+    }
+    public Integer deletePeopleExpenses (String id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete(TABLE_PEOPLEXPENSES, "eid = ?", new String[] { id });
     }
 
     /*

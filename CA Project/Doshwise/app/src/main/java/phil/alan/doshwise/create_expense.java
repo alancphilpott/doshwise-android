@@ -77,7 +77,7 @@ public class create_expense extends AppCompatActivity {
                                 monthString);
 
                 boolean peInserted = false;
-                Integer eid = maxExpenseID(); // meaning this should be one, thats how i know the people related to what expense num
+                Integer eid = maxExpenseID(); // meaning this should be one, that's how i know the people related to what expense num
 
                 for (Integer i : peopleInvolved) {
                     peInserted = db.insertPEData(i, eid);

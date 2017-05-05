@@ -4,12 +4,16 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-
+import android.widget.Toast;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class split_expenses extends AppCompatActivity {
     DBHelper db;
@@ -19,10 +23,12 @@ public class split_expenses extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_split_expenses);
         db = new DBHelper(this);
+        Cursor cursor;
 
         // group expense totals by month
         ArrayList<String> expenseNames = new ArrayList<>();
-        Cursor cursor = db.splitExpenses();
+
+        cursor = db.splitExpenses();
         if (cursor.moveToFirst()) {
             do {
                 expenseNames.add("Person: " + cursor.getString(0) + " - Total: €" + cursor.getString(1));
@@ -59,5 +65,29 @@ public class split_expenses extends AppCompatActivity {
         // create a list of expense ids and use them to get expense
         // need to display the person's name and the total of the expenses for that person
         // make it dynamic
+    }
+
+    // METHOD TO ADD OPTIONS MENU
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    // METHOD FOR OPTIONS MENU ITEMS
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.household: {
+                Toast.makeText(split_expenses.this,"You Clicked Household",Toast.LENGTH_SHORT).show();
+                return true;
+            }
+            case R.id.about: {
+                Toast.makeText(split_expenses.this,"You Clicked About",Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
