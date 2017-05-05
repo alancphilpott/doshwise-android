@@ -29,7 +29,7 @@ public class split_expenses extends AppCompatActivity {
             } while (cursor.moveToNext());
         }
         // add expenses to ListView
-        ListView listView = (ListView) findViewById(R.id.expensesList);
+        ListView listView = (ListView) findViewById(R.id.splitList);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, expenseNames);
         listView.setAdapter(adapter);
 

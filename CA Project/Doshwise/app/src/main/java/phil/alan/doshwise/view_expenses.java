@@ -27,7 +27,7 @@ public class view_expenses extends AppCompatActivity {
         Cursor cursor = db.getAllExpensesData();
         if (cursor.moveToFirst()) {
             do {
-                expenseNames.add("Name: " + cursor.getString(1) + " - Amount: €" + cursor.getString(2));
+                expenseNames.add(cursor.getString(1) + " €" + cursor.getString(2));
             } while (cursor.moveToNext());
         }
         // add expenses to ListView

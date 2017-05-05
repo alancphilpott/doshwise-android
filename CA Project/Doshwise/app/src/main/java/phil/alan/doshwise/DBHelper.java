@@ -160,7 +160,7 @@ public class DBHelper extends SQLiteOpenHelper {
     }
     public Cursor splitExpenses() {
         SQLiteDatabase db = this.getWritableDatabase();
-        return db.rawQuery("SELECT P.name, sum(E.amount) FROM " + TABLE_EXPENSES + " E, " + TABLE_PEOPLE + " P, " + TABLE_PEOPLEXPENSES + "PE WHERE PE.pid = P.pid AND PE.eid = E.eid GROUP BY P.name", null);
+        return db.rawQuery("SELECT P.name, sum(E.amount) FROM " + TABLE_EXPENSES + " E, " + TABLE_PEOPLE + " P, " + TABLE_PEOPLEXPENSES + " PE WHERE PE.pid = P.pid AND PE.eid = E.eid GROUP BY P.name", null);
     }
 
     /*
