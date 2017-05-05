@@ -154,9 +154,13 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         return db.rawQuery("SELECT * FROM " + TABLE_EXPENSES, null);
     }
-    public Cursor getExpenseNames() {
+    public Cursor getExpenseHistory() {
         SQLiteDatabase db = this.getWritableDatabase();
-        return db.rawQuery("SELECT name FROM " + TABLE_EXPENSES, null);
+        return db.rawQuery("SELECT month, SUM(amount) FROM " + TABLE_EXPENSES + " GROUP BY month", null);
+    }
+    public Cursor splitExpenses() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.rawQuery("SELECT P.name, sum(E.amount) FROM " + TABLE_EXPENSES + " E, " + TABLE_PEOPLE + " P, " + TABLE_PEOPLEXPENSES + "PE WHERE PE.pid = P.pid AND PE.eid = E.eid GROUP BY P.name", null);
     }
 
     /*

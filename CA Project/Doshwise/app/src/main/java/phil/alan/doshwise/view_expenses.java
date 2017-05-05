@@ -25,13 +25,11 @@ public class view_expenses extends AppCompatActivity {
         // access database for expense entries
         ArrayList<String> expenseNames = new ArrayList<>();
         Cursor cursor = db.getAllExpensesData();
-
         if (cursor.moveToFirst()) {
             do {
-                expenseNames.add("Name: " + cursor.getString(1) + " || Amount: €" + cursor.getString(2));
+                expenseNames.add("Name: " + cursor.getString(1) + " - Amount: €" + cursor.getString(2));
             } while (cursor.moveToNext());
         }
-
         // add expenses to ListView
         ListView listView = (ListView) findViewById(R.id.expensesList);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, expenseNames);
