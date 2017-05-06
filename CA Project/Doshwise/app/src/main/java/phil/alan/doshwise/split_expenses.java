@@ -30,7 +30,7 @@ public class split_expenses extends AppCompatActivity {
         cursor = db.splitExpenses();
         if (cursor.moveToFirst()) {
             do {
-                expenseNames.add("Person: " + cursor.getString(0) + " - Total: €" + cursor.getString(1));
+                expenseNames.add("Person: " + cursor.getString(2) + " - Total: €" + cursor.getString(3));
             } while (cursor.moveToNext());
         }
         // ADD EXPENSES TO LIST VIEW

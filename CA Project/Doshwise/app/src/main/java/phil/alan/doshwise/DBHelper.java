@@ -160,7 +160,7 @@ public class DBHelper extends SQLiteOpenHelper {
     }
     public Cursor splitExpenses() {
         SQLiteDatabase db = this.getWritableDatabase();
-        return db.rawQuery("SELECT P.name, sum(E.amount) FROM " + TABLE_EXPENSES + " E, " + TABLE_PEOPLE + " P, " + TABLE_PEOPLEXPENSES + " PE WHERE PE.pid = P.pid AND PE.eid = E.eid GROUP BY P.name", null);
+        return db.rawQuery("SELECT EXPENSES.eid, PEOPLEXPENSES.pid, PEOPLE.name, SUM(amount.amount) FROM EXPENSES INNER JOIN PEOPLEXPENSES ON PEOPLEXPENSES.eid = EXPENSES.eid INNER JOIN (SELECT query1.eid, query1.amount\nFROM (SELECT EXPENSES.eid, SUM(EXPENSES.amount) / PEOPLEXPENSES.amountOfPPL AS amount FROM HOUSEHOLDS INNER JOIN PEOPLE ON PEOPLE.hid = HOUSEHOLDS.hid INNER JOIN ( SELECT eid, MAX(pid) AS pid, COUNT(*) AS amountOfPPL FROM PEOPLEXPENSES GROUP BY eid ) AS PEOPLEXPENSES ON PEOPLEXPENSES.pid = PEOPLE.pid INNER JOIN EXPENSES ON EXPENSES.eid = PEOPLEXPENSES.eid WHERE HOUSEHOLDS.hid = 1 GROUP BY EXPENSES.eid) AS query1) AS amount ON amount.eid = EXPENSES.eid INNER JOIN PEOPLE ON PEOPLEXPENSES.pid = PEOPLE.pid GROUP BY PEOPLEXPENSES.pid", null);
     }
     public Cursor numTimes() {
         SQLiteDatabase db = this.getWritableDatabase();
