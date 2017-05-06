@@ -25,21 +25,20 @@ public class split_expenses extends AppCompatActivity {
         db = new DBHelper(this);
         Cursor cursor;
 
-        // group expense totals by month
+        // GROUP EXPENSE TOTALS BY PERSON - EXPENSE NUMBERS NEED TO BE DIVIDED BY THE NUM PEOPLE INVOLVED BEFORE BEING ADDED TO THAT PERSON TOTAL EXPENSE
         ArrayList<String> expenseNames = new ArrayList<>();
-
         cursor = db.splitExpenses();
         if (cursor.moveToFirst()) {
             do {
                 expenseNames.add("Person: " + cursor.getString(0) + " - Total: €" + cursor.getString(1));
             } while (cursor.moveToNext());
         }
-        // add expenses to ListView
+        // ADD EXPENSES TO LIST VIEW
         ListView listView = (ListView) findViewById(R.id.splitList);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, expenseNames);
         listView.setAdapter(adapter);
 
-        // listeners for changing activities
+        // LISTENERS FOR CHANGING ACTIVITIES
         Button expenses = (Button) findViewById(R.id.btn_expenses);
         expenses.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,15 +55,6 @@ public class split_expenses extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-        /*
-       access database to retrieve expenses and split them
-         */
-
-        // create a list of peoples ids and use them to get name
-        // create a list of expense ids and use them to get expense
-        // need to display the person's name and the total of the expenses for that person
-        // make it dynamic
     }
 
     // METHOD TO ADD OPTIONS MENU
