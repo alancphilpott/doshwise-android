@@ -33,7 +33,7 @@ public class view_expenses extends AppCompatActivity {
         Cursor cursor = db.getAllExpensesData();
         if (cursor.moveToFirst()) {
             do {
-                expenseNames.add(cursor.getString(0) + " : " + cursor.getString(1) + " €" + cursor.getString(2));
+                expenseNames.add(cursor.getString(0) + "th : " + cursor.getString(1) + " €" + cursor.getString(2));
             } while (cursor.moveToNext());
         }
         // ADD EXPENSES TO LIST VIEW
