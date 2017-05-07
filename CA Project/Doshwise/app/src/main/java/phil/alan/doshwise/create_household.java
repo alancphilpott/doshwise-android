@@ -21,6 +21,12 @@ public class create_household extends AppCompatActivity {
         setContentView(R.layout.activity_create_household);
         db = new DBHelper(this);
 
+        Cursor cursor = db.getAllHouseholdData();
+        if(cursor.moveToFirst()) {
+            Intent intent = new Intent(create_household.this, view_expenses.class);
+            startActivity(intent);
+        }
+
 
         // adding listener to complete button
         Button householdToViewExpenses = (Button) findViewById(R.id.complete_button);

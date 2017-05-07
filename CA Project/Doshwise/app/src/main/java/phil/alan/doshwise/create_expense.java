@@ -1,5 +1,6 @@
 package phil.alan.doshwise;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.database.Cursor;
 import android.icu.util.Calendar;
@@ -22,6 +23,7 @@ public class create_expense extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_expense);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         db = new DBHelper(this);
 
         final CheckBox ch1 = (CheckBox) findViewById(R.id.ch1);
