@@ -27,7 +27,6 @@ public class create_household extends AppCompatActivity {
             startActivity(intent);
         }
 
-
         // adding listener to complete button
         Button householdToViewExpenses = (Button) findViewById(R.id.complete_button);
         householdToViewExpenses.setOnClickListener(new View.OnClickListener() {
